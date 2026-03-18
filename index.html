@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Обработка телефонных номеров</title>
+</head>
+<body>
+
+    <h2>Обработка телефонных номеров</h2>
+
+    <p>
+        Загрузите текстовый файл. Программа найдет все телефонные номера,
+        исправит возможные ошибки в их написании, заменит код страны
+        и приведет номера к единому формату:
+        <br>
+        <b>+1 (XXX) XXXXXXX</b>
+    </p>
+
+    <input type="file" id="fileInput" accept=".txt">
+
+    <br><br>
+
+    <button id="processBtn">Обработать</button>
+
+    <h3>Результат:</h3>
+    <textarea id="output" rows="15" cols="80" readonly></textarea>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
