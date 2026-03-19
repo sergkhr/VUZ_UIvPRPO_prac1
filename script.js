@@ -11,24 +11,33 @@ function displayOutput(text_ini, text) {
 
 
 function processText(text) {
-    const phoneRegex = /(\+?\d[\d\s\-()_]{7,}\d)/g;
+    // Ищем все потенциальные номера
+    const phoneRegex = /(\+?\d[\d\s\-()_!]{5,}\d)/g;
 
     return text.replace(phoneRegex, (match) => {
-        // Удаляем всё кроме цифр
-        let digits = match.replace(/\D/g, "");
-
-        // Обработка разных случаев
-        if (digits.length === 11 && (digits[0] === "7" || digits[0] === "8")) {
-            // Убираем код страны (7 или 8)
-            digits = digits.slice(1);
-        } else if (digits.length === 10) {
-            // Ок, уже локальный номер
-        } else {
-            // Если длина странная — не трогаем
+        // 1. Если есть буквы → НЕ исправляем   -- TODO - ГПТ моумент - пересмотреть, исправить
+        if (/[a-zA-Zа-яА-Я]/.test(match)) {
             return match;
         }
 
-        // Теперь должно быть 10 цифр
+        // 2. Оставляем только цифры
+        let digits = match.replace(/\D/g, "");
+
+        // 3. Проверка длины
+        if (digits.length < 10) {
+            return match; // НЕисправляемо
+        }
+
+        // 4. Нормализация
+        if (digits.length === 11 && (digits[0] === "7" || digits[0] === "8")) {
+            digits = digits.slice(1);
+        } else if (digits.length === 10) {
+            // локальный номер — ок
+        } else {
+            return match; // лишние цифры → НЕисправляемо
+        }
+
+        // 5. Финальная проверка
         if (digits.length !== 10) return match;
 
         const area = digits.slice(0, 3);
