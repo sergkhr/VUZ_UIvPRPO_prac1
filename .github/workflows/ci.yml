@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Скачать репозиторий
+        uses: actions/checkout@v4
+
+      - name: Установить Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Проверка JavaScript
+        run: node -c script.js
