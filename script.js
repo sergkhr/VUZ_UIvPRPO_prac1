@@ -9,6 +9,7 @@ function displayOutput(text_ini, text) {
     output.value = text;
 }
 
+let a = ;
 
 function processText(text) {
     // Ищем все потенциальные номера
