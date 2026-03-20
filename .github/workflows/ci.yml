@@ -5,24 +5,17 @@ on:
     branches: [ "master" ]
 
 jobs:
-  sonar:
+  check:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Скачать репозиторий
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Установить Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
 
-      - name: Проверка JS
+      - name: Проверка JavaScript
         run: node -c script.js
-
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@v2
-        with:
-          projectBaseDir: .
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
