@@ -76,6 +76,8 @@ processBtn.addEventListener("click", async () => {
         const text = await readFile(file);
         const result = processText(text);
         displayOutput(text, result);
+        
+        fileInput.value = "";
     } catch (error) {
         alert(error);
     }
