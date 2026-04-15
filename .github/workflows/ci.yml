@@ -2,20 +2,25 @@ name: CI
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
 
 jobs:
-  check:
+  test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Скачать репозиторий
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Установить Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 18
 
-      - name: Проверка JavaScript
-        run: node -c script.js
+      - run: npm install
+
+      - name: Run tests with coverage
+        run: npm test
+
+      - name: Send to Coveralls
+        run: npx coveralls < coverage/lcov.info
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_KEY }}
